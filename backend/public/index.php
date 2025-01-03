@@ -1,3 +1,3 @@
 <?php
 
-echo 'Hello from serer!';
+echo 'Hello from server!';
