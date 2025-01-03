@@ -9,5 +9,11 @@ html {
     height: 100vh;
     width: 85%;
     margin: 0 auto;
+
+    .main-layout {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
