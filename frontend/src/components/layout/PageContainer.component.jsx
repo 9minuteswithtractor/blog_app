@@ -6,9 +6,7 @@ const PageContainer = ({ title, content }) => {
       <div className="title-container">
         <h2>{title}</h2>
       </div>
-      <div className="content-container">
-        <p>{content}</p>
-      </div>
+      <div className="content-container">{content}</div>
     </main>
   );
 };

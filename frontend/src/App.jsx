@@ -1,8 +1,12 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+import PageContainer from "./components/layout/PageContainer.component";
 import NavBar from "./components/navbar/NavBar.component";
-import PageContainer from "./components/page-container/PageContainer.component";
+import HomePage from "./components/pages/home/HomePage.component";
+import ArticlesPage from "./components/pages/articles/ArticlesPage.component";
+
 import "./App.scss";
+import LoginPage from "./components/pages/auth/LoginPage.component";
 
 function App() {
   return (
@@ -14,11 +18,7 @@ function App() {
             <Route
               path="/"
               element={
-                <PageContainer
-                  title="Welcome!"
-                  // TODO : Create content as PageComponent to display dynamic content ...
-                  content="Some info about this page ..."
-                />
+                <PageContainer title="Welcome!" content={<HomePage />} />
               }
             />
             <Route
@@ -26,7 +26,7 @@ function App() {
               element={
                 <PageContainer
                   title="Catch up with latest Posts!"
-                  content="Here is List of latest articles"
+                  content={<ArticlesPage />}
                 />
               }
             />
@@ -35,7 +35,7 @@ function App() {
               element={
                 <PageContainer
                   title="Enter Your login details"
-                  content="Here is Login Form"
+                  content={<LoginPage />}
                 />
               }
             />
