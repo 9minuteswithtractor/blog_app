@@ -9,4 +9,19 @@ main.page-container {
   flex-direction: column;
   justify-content: flex-start;
   gap: 70px;
+
+  .title-container {
+    margin-top: 70px;
+    // border: 2px solid green;
+    text-align: center;
+  }
+
+  .content-container {
+    height: 50%;
+    // border: 5px solid blueviolet;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
