@@ -11,7 +11,7 @@ const NavBar = () => {
             <Link to="/">Home</Link>
           </li>
           <li className="navigation-right">
-            <Link to="/posts">Articles</Link>
+            <Link to="/articles">Articles</Link>
           </li>
           <li className="navigation-login">
             <Link to="/login">

@@ -22,7 +22,7 @@ function App() {
               }
             />
             <Route
-              path="/posts"
+              path="/articles"
               element={
                 <PageContainer
                   title="Catch up with latest Posts!"
