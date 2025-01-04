@@ -29,8 +29,7 @@
 First 
 
 1. Check if php installed
-
-`php -v`
+   `php -v`
 
 if not then `brew install php`
 

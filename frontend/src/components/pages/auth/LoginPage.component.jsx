@@ -30,13 +30,9 @@ const LoginPage = () => {
   };
 
   const login = async () => {
-    const formData = {
-      user: user,
-      password: password,
-    };
     setLoginAttempt(true);
 
-    const baseApi = "http://app.localhost:80/api";
+    const baseApi = "http://app.localhost:8000/api";
     try {
       const response = await axios.post(`${baseApi}/login`, formData, {
         headers: { "Content-Type": "application/json" },

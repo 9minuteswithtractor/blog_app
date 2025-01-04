@@ -16,7 +16,7 @@
             "request": "launch",
             "runtimeArgs": [
                 "-S",
-                "localhost:8000",
+                "localhost:8000", // or as needed e.g. 8000
                 "-t",
                 "backend/public",
                 "-d",

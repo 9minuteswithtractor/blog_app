@@ -12,6 +12,7 @@ header('Access-Control-Allow-Headers: Content-Type');
 
 // session_start();
 
+// 
 
 /**
  * Checklist :
@@ -26,5 +27,55 @@ header('Access-Control-Allow-Headers: Content-Type');
  * If req === post => check url (endpoint) => trigger controller
  */
 
- echo 'Server from server!';
+$uri = $_SERVER['REQUEST_URI'];
+$url = parse_url($uri, PHP_URL_PATH);
 
+
+// login -> onSuccessLogin _> session_start()
+
+
+function validateUser(string $user, string $password): bool
+{
+
+    $validUser = 'johnny';
+    $validPass = '123';
+
+    if ($user === $validUser && $password === $validPass) {
+
+        return true;
+    }
+    return false;
+}
+
+/**
+ * 
+ *  after class User
+ * @return void
+ */
+function login()
+{
+
+
+    $rawData = file_get_contents('php://input');
+    $data = json_decode($rawData, true);
+
+    $cleanUser = htmlspecialchars($data['user']);
+    $cleanPass = htmlspecialchars($data['password']);
+
+    // validate
+    $isValid = validateUser($cleanUser, $cleanPass);
+
+
+    echo ($isValid) ? 'Go Go Go!' : 'Naughty naughty!';
+    if ($isValid) {
+        session_start();
+    }
+}
+
+if ($url === '/api/login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+
+
+    login();
+} else {
+    echo 'bad request ..';
+}
