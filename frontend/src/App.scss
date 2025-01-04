@@ -4,16 +4,34 @@
   box-sizing: border-box;
 }
 
-html {
-  .App {
-    height: 100vh;
-    width: 85%;
-    margin: 0 auto;
+html,
+body {
+  height: 100%; /* Ensure html and body take up the full height */
+}
 
-    .main-layout {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
+body {
+  width: 100%;
+  margin: 0 auto;
+  // border: 5px solid lime; /* Debugging border */
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+}
+
+.App {
+  flex-grow: 1;
+  width: 85%; /* Full width of the screen */
+  height: 100%; /* Full height of the body */
+  display: flex; /* Enable flexbox for layout */
+  flex-direction: column; /* Stack children vertically */
+  margin: 0 auto;
+  // border: 5px solid red; /* Debugging border */
+
+  .main-layout {
+    height: 100%; /* Ensure .main-layout takes up full height of .App */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    // border: 5px solid orange; /* Debugging border */
+    overflow: hidden; /* Prevent overflow issues if children are large */
   }
 }

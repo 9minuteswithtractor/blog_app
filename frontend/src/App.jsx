@@ -4,9 +4,9 @@ import PageContainer from "./components/layout/PageContainer.component";
 import NavBar from "./components/navbar/NavBar.component";
 import HomePage from "./components/pages/home/HomePage.component";
 import ArticlesPage from "./components/pages/articles/ArticlesPage.component";
+import LoginPage from "./components/pages/auth/LoginPage.component";
 
 import "./App.scss";
-import LoginPage from "./components/pages/auth/LoginPage.component";
 
 function App() {
   return (
