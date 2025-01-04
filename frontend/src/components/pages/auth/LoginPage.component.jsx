@@ -7,7 +7,8 @@ const LoginPage = () => {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginAttempt, setLoginAttempt] = useState(false);
+  const [error, setError] = useState("");
 
   const handleOnUserChange = (event) => {
     const { value } = event.target;
@@ -28,22 +29,23 @@ const LoginPage = () => {
     await login();
   };
 
-  const login = () => {
+  const login = async () => {
     const formData = {
       user: user,
       password: password,
     };
+    setLoginAttempt(true);
 
     const baseApi = "http://app.localhost:80/api";
     try {
-      const response = axios.post(`${baseApi}/login`, formData, {
+      const response = await axios.post(`${baseApi}/login`, formData, {
         headers: { "Content-Type": "application/json" },
       });
 
       const result = response.data;
       setMessage(result);
-    } catch (error) {
-      console.log("Could not log in", error);
+    } catch (err) {
+      console.log("Could not log in", err);
     }
   };
 
@@ -74,7 +76,12 @@ const LoginPage = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      <div>{message}</div>
+      {/* debug purpose */}
+      {loginAttempt && (
+        <div style={{ marginTop: "15px" }}>
+          username: {user} <br /> pass: {password}
+        </div>
+      )}
     </>
   );
 };
