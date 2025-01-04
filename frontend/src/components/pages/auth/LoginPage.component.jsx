@@ -42,10 +42,10 @@ const LoginPage = () => {
         headers: { "Content-Type": "application/json" },
       });
 
-      const result = response.data;
-      setMessage(result);
+      const result = response;
+      console.log(result);
     } catch (err) {
-      setError(err);
+      console.log(err);
     }
   };
 
@@ -79,7 +79,7 @@ const LoginPage = () => {
       {/* debug purpose */}
       {loginAttempt && (
         <div style={{ marginTop: "15px" }}>
-          username: {user} <br /> pass: {password} <br /> Server: {message}
+          username: {user} <br /> pass: {password}
         </div>
       )}
     </>
