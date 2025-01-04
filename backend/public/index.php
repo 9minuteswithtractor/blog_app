@@ -33,9 +33,29 @@ $url = parse_url($uri, PHP_URL_PATH);
 
 // login -> onSuccessLogin _> session_start()
 
+// TODO : create func save new user
+
+
+function getAllUsers() {}
+
 
 function validateUser(string $user, string $password): bool
 {
+
+
+    $validUser = 'johnny';
+    $validPass = '123';
+
+    if ($user === $validUser && $password === $validPass) {
+
+        return true;
+    }
+    return false;
+}
+
+function registerUser(string $user, string $password): bool
+{
+
 
     $validUser = 'johnny';
     $validPass = '123';
@@ -52,6 +72,8 @@ function validateUser(string $user, string $password): bool
  *  after class User
  * @return void
  */
+
+
 function login()
 {
 
@@ -71,9 +93,32 @@ function login()
         session_start();
     }
 }
+function register()
+{
 
-if ($url === '/api/login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    $rawData = file_get_contents('php://input');
+    $data = json_decode($rawData, true);
+
+    $cleanUser = htmlspecialchars($data['user']);
+    $cleanPass = htmlspecialchars($data['password']);
+
+    // TODO : tasks :
+
+    // $allUsers = getAllUsers();
+    // $cleanUserNameAvailable ? => register() : err
+    // $newUserSuccess = registerUser($cleanUser, $cleanPass);
+
+    // echo ($isValid) ? 'Go Go Go!' : 'Naughty naughty!';
+    // if ($isValid) {
+    //     session_start();
+    // }
+}
+
+
+if ($url === '/api/register' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    register();
+} elseif ($url === '/api/login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
     login();
 } else {
