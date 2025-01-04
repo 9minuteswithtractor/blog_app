@@ -40,6 +40,9 @@ function App() {
               }
             />
           </Routes>
+          <footer>
+            <p>Footer here</p>
+          </footer>
         </div>
       </Router>
     </div>
