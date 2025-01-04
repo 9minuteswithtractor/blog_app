@@ -1,0 +1,40 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Listen for Xdebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+            "pathMappings": {
+                "${workspaceRoot}": "${workspaceRoot}"
+            }
+        },
+        {
+            "name": "Launch php server",
+            "type": "php",
+            "request": "launch",
+            "runtimeArgs": [
+                "-S",
+                "localhost:8000",
+                "-t",
+                "backend/public",
+                "-d",
+                "xdebug.mode=debug",
+                "-d",
+                "xdebug.client_host=127.0.0.1",
+                "-d",
+                "xdebug.client_port=9003",
+            ],
+            "pathMappings": {
+                "/": "${workspaceRoot}/backend/public"
+            }
+        },        
+    ],
+    "compounds": [
+        {
+            "name": "Launch Server & Debug",
+            "configurations": ["Launch php server", "Listen for Xdebug"]
+        }
+    ]
+}
