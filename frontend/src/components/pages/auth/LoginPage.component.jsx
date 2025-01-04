@@ -24,9 +24,9 @@ const LoginPage = () => {
    *  post req to backend
    *  Q : ? should this function be async or thats only necessary for get requests ?
    */
-  const handleOnFormSubmit = async (event) => {
+  const handleOnFormSubmit = (event) => {
     event.preventDefault(); // so the page doesn't reload ...
-    await login();
+    login();
   };
 
   const login = async () => {
@@ -45,7 +45,7 @@ const LoginPage = () => {
       const result = response.data;
       setMessage(result);
     } catch (err) {
-      console.log("Could not log in", err);
+      setError(err);
     }
   };
 
@@ -79,7 +79,7 @@ const LoginPage = () => {
       {/* debug purpose */}
       {loginAttempt && (
         <div style={{ marginTop: "15px" }}>
-          username: {user} <br /> pass: {password}
+          username: {user} <br /> pass: {password} <br /> Server: {message}
         </div>
       )}
     </>
