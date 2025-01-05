@@ -1,6 +1,4 @@
-# keys
 id,title,content,author
-# values
 1,First Post,"This is my first post",Steve Griffin
 2,My Second Post,"This is another interesting post",Steve Griffin
 3,The Rise of AI and Its Impact on Software Development,"Artificial Intelligence (AI) is transforming the world of software development. From automated code generation to intelligent debugging and personalized user experiences, AI is increasingly becoming a powerful ally for developers. But what does this mean for the future of coding?",[Author Name Missing]
