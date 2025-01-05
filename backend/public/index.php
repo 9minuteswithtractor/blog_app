@@ -15,7 +15,7 @@ if ($url === '/api/register' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     login();
 } elseif ($url === '/api/logout') {
     logout();
-} elseif ($url === '/api/article') {
+} elseif ($url === '/api/article' && $_SERVER['REQUEST_METHOD'] === 'GET') {
     getArticle();
 } 
  else {
