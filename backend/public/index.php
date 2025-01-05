@@ -17,8 +17,7 @@ if ($url === '/api/register' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     logout();
 } elseif ($url === '/api/article' && $_SERVER['REQUEST_METHOD'] === 'GET') {
     getArticle();
-} 
- else {
+} else {
     echo 'bad request ..';
 }
 
