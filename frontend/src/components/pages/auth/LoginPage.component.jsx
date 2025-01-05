@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 import "./LoginPage.styles.scss";
 
@@ -9,6 +10,7 @@ const LoginPage = () => {
   const [message, setMessage] = useState("");
   const [loginAttempt, setLoginAttempt] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleOnUserChange = (event) => {
     const { value } = event.target;
@@ -37,14 +39,21 @@ const LoginPage = () => {
       password: password,
     };
 
-    const baseApi = "http://app.localhost:8000/api";
+    const baseApi = "http://localhost:8000/api";
     try {
       const response = await axios.post(`${baseApi}/login`, formData, {
         headers: { "Content-Type": "application/json" },
       });
 
       const result = response.data;
-      console.log(result);
+      debugger;
+      if (result.success) {
+        console.log(result.message);
+        navigate('/articles');
+      } else {
+        console.log(result.message);
+        setMessage(result.message);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -80,7 +89,7 @@ const LoginPage = () => {
       {/* debug purpose */}
       {loginAttempt && (
         <div style={{ marginTop: "15px" }}>
-          username: {user} <br /> pass: {password}
+          username: {user} <br /> error message: {message}
         </div>
       )}
     </>
