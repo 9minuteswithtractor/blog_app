@@ -25,7 +25,7 @@ define('POSTS_DB', 'posts.csv');
  * @var string $pathToDb dir where USERS_DB file is located
  * @var string $filePath absolute location of USERS_DB file
  * 
- *@return string absolute filePath if exist, empty string otherwise...
+ *@return string absolute filePath if exist, false otherwise...
  */
 
 function getFilePath(string $fileName): bool|string
@@ -45,7 +45,7 @@ function getFilePath(string $fileName): bool|string
  * @var string||bool $userDbFile path or false if file doesn't exist
  * @var array $usersFromDb list of users got from DB_USERS
  * 
- * @return array List of users or empty otherwise 
+ * @return array List of users from USERS_DB or empty otherwise 
  */
 
 function getAllUsers(): array
