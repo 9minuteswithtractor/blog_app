@@ -18,6 +18,15 @@ define('USERS_DB', 'users.csv');
 define('POSTS_DB', 'posts.csv');
 
 
+
+// front controller req api endpoint root :
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    echo 'post req in progress ...';
+}
+
+
+
 /**
  *  Finds and returns file path if it exist, false otherwise
  * 
@@ -80,6 +89,7 @@ function getAllUsers(): array
 }
 
 
+
 /**
  * Goes through users 'db' and validates username and password / optionally could also starts session (see TODO: line 118)
  * 
@@ -107,6 +117,10 @@ function isUserValid(): bool
 
     // TODO : QUESTION for K : does cleanUser and cleanPass -> toLowerCase() ? as it is user input ...
 
+
+
+
+
     if ($usersFromDB) {
 
         // usersFromDB obj structure : [ [id, username, password] ]
@@ -114,14 +128,17 @@ function isUserValid(): bool
 
             if ($userFromDB['username'] === $cleanUsernameFromClient && $userFromDB['password'] === $cleanPasswordFromClient) {
                 echo 'User found, validated and good to proceed with login';
-                /* 
-                TODO : QUESTION for K : maybe here we could start session as we have user and pass encapsulated in this func?
-                or alternatively return arr['username' => 'usernameValue', 'isValid' => true || false] and then within login check if isValid then take username and start session ? What do You think ? (im trying not to use too many func arguments as You mentioned that less is kinda better ... )
-                */
-                session_start();
+
+
+                // check if user already has ongoing session
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                }
+
+
 
                 $_SESSION['user'] = $cleanUsernameFromClient;
-                $_SESSION['password'] = $cleanPasswordFromClient;
+
 
                 return true;
             }
@@ -143,10 +160,10 @@ function isUserValid(): bool
 function login()
 {
 
-
-
     if (isUserValid()) {
         echo 'Login Successful!';
+
+
         echo '<br />Welcome : ' . $_SESSION['user'] . ' !';
     } else {
         echo 'Incorrect username and / or password';
@@ -156,17 +173,50 @@ function login()
 }
 
 
-try {
-    login();
-} catch (Exception $err) {
-    echo 'something went wrong ... ', $err->getMessage();
-}
-
 
 // TODO : Create Register new user func ( also checks USERS_DB if username is taken )
 
-/** Register user
+/** Register user logic :
  * 
+ *  loop through the file and check if username is already registered
+ *  if username is already taken proceed accordingly ...
  */
 
-function registerNewUser() {}
+
+function registerNewUser()
+{
+
+    $usersFromDB = getAllUsers();
+
+    if ($usersFromDB) {
+
+        $rawData = file_get_contents('php://input');
+        $data = json_decode($rawData, true);
+
+        $cleanUsernameFromClient = htmlspecialchars($data['user']);
+
+        // Checking if username contains at least 3 alphanumeric characters
+        $validMatch = preg_match('/^[a-zA-Z0-9]{3,}$/', $cleanUsernameFromClient);
+
+
+        $userNameIsTaken = false;
+
+        if ($validMatch) {
+
+            // TODO : Q for Kriss : Maybe extract this foreach as function because similar logic is used also in login func ?
+            foreach ($usersFromDB as $userFromDB) {
+
+                if ($userFromDB['username'] === $cleanUsernameFromClient) {
+                    echo 'Username is taken, please choose another username';
+                    $userNameIsTaken = true;
+                    break;
+                }
+            }
+            return $userNameIsTaken;
+        }
+        return $userNameIsTaken;
+    }
+}
+
+
+echo registerNewUser();
