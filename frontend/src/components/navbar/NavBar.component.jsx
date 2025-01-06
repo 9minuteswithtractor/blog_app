@@ -15,7 +15,7 @@ const NavBar = () => {
           </li>
           <li className="navigation-login">
             <Link to="/login">
-              <i class="bi bi-person-fill"></i> Login
+              <i className="bi bi-person-fill"></i> Login
             </Link>
           </li>
         </ul>
