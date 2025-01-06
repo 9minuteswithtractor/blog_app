@@ -1,13 +1,6 @@
 <?php
 
-// display errors 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-// CORS headers
-header('Access-Control-Allow-Origin: http://localhost:5173'); // allow access from client
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
+loadBasicConf();
 
 
 $uri = $_SERVER['REQUEST_URI'];
@@ -16,6 +9,34 @@ $url = parse_url($uri, PHP_URL_PATH);
 
 define('USERS_DB', 'users.csv');
 define('POSTS_DB', 'posts.csv');
+
+
+switch ($url) {
+
+    case '/api/login':
+
+        require_once '../src/controllers/LoginController.php';
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $loginController = new LoginController;
+            $loginController->handleLogin();
+        } else {
+            echo json_encode(['message' => 'Login GET attempted']);
+        }
+        break;
+
+    case '/api/articles':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // $postController = new PostController;
+            // $posController->getAllPosts();
+        } else {
+            echo json_encode(['message' => 'Login GET attempted']);
+        }
+    default:
+        echo 'Bad request ...';
+}
+
+
 
 
 /**
@@ -97,7 +118,7 @@ function isUserValid(): bool
 
     $usersFromDB = getAllUsers();
 
-    // TODO : QUESTION for K : only if client post req api === '/api/login' ???
+
 
     $rawData = file_get_contents('php://input');
     $data = json_decode($rawData, true);
@@ -105,20 +126,12 @@ function isUserValid(): bool
     $cleanUsernameFromClient = htmlspecialchars($data['user']);
     $cleanPasswordFromClient = htmlspecialchars($data['password']);
 
-    // TODO : QUESTION for K : does cleanUser and cleanPass -> toLowerCase() ? as it is user input ...
 
     if ($usersFromDB) {
 
-        // usersFromDB obj structure : [ [id, username, password] ]
         foreach ($usersFromDB as $userFromDB) {
 
             if ($userFromDB['username'] === $cleanUsernameFromClient && $userFromDB['password'] === $cleanPasswordFromClient) {
-                echo 'User found, validated and good to proceed with login';
-                /* 
-                TODO : QUESTION for K : maybe here we could start session as we have user and pass encapsulated in this func?
-                or alternatively return arr['username' => 'usernameValue', 'isValid' => true || false] and then within login check if isValid then take username and start session ? What do You think ? (im trying not to use too many func arguments as You mentioned that less is kinda better ... )
-                */
-                session_start();
 
                 $_SESSION['user'] = $cleanUsernameFromClient;
                 $_SESSION['password'] = $cleanPasswordFromClient;
@@ -126,11 +139,10 @@ function isUserValid(): bool
                 return true;
             }
         }
+        return false;
     }
-
-    return false; // no users in DB, failed validation process or USERS_DB doesn't exist
+    return false;
 }
-
 
 /**
  *  Proceeds login 
@@ -143,24 +155,29 @@ function isUserValid(): bool
 function login()
 {
 
-
-
     if (isUserValid()) {
-        echo 'Login Successful!';
-        echo '<br />Welcome : ' . $_SESSION['user'] . ' !';
-    } else {
-        echo 'Incorrect username and / or password';
-        // TODO : QUESTION for K : I guess no need to unset / end session at this point as isUserValid() returned false and session_start() was never called ?
 
+        $data = [
+            'message' => 'login successful',
+            'loginStatus' => true
+        ];
+
+        $_SESSION['isLoggedIn'] = true;
+        echo json_encode($data);
+    } else {
+
+        $data = [
+            'message' => 'Incorrect username and / or password',
+            'loginStatus' => false
+        ];
+
+        echo json_encode($data);
+        $_SESSION['isLoggedIn'] = false;
     }
 }
 
 
-try {
-    login();
-} catch (Exception $err) {
-    echo 'something went wrong ... ', $err->getMessage();
-}
+
 
 
 // TODO : Create Register new user func ( also checks USERS_DB if username is taken )
@@ -170,3 +187,20 @@ try {
  */
 
 function registerNewUser() {}
+
+
+/**
+ *  Loads necessary headers and starts session
+ */
+
+function loadBasicConf(): void
+{
+    // CORS headers
+    header('Access-Control-Allow-Origin: http://localhost:5173'); // allow access from client
+    header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+    header('Access-Control-Allow-Headers: Content-Type');
+    header('Content-Type: application/json');
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+}
