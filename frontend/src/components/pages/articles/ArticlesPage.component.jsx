@@ -1,12 +1,10 @@
-//  get req to server and fetch articles ...
-// display articles on screen ...
-
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+import "./ArticlesPage.styles.scss";
+
 const ArticlesPage = () => {
-  const [user, setUser] = useState("");
-  const [articles, setArticles] = useState(null);
+  const [articles, setArticles] = useState([]);
   const [error, setError] = useState("");
 
   // fetch all articles on init state :
@@ -15,31 +13,51 @@ const ArticlesPage = () => {
       const baseApi = "http://localhost:8000/api";
       try {
         const response = await axios.get(`${baseApi}/articles`);
-        console.log(response.data);
 
-        // setArticles('')
+        const allReqData = response.data;
+        setArticles(allReqData);
+        //
       } catch (err) {
         setError(err.message); // Update state with the error message
       } finally {
-        setLoading(false); // Set loading to false when the request is complete
+        console.log("fetching all articles from server ...");
       }
     };
-
     fetchAllArticles(); // Call the function
   }, []);
 
-  const fetchAllArticles = async () => {
-    const baseApi = "http://localhost:8000/api";
-
-    try {
-      const response = await axios.get(`${baseApi}/articles`);
-      console.log(response.data);
-    } catch (err) {
-      setError(err);
-    }
-  };
-  // .map => title, content, author ..
-  return <div></div>;
+  // obj shape : id, title, content, author
+  if (articles.length > 0 && !error) {
+    return (
+      <>
+        <ul className="articles-container">
+          {articles.map((post) => {
+            const { id, title, content, author } = post;
+            return (
+              <>
+                <li className="article-card-container" key={id}>
+                  <h2>{title}</h2>
+                  <p>{content}</p>
+                  <h3>
+                    <em>{author}</em>
+                  </h3>
+                </li>
+                <li className="article-card-container" key={id}>
+                  <h2>{title}</h2>
+                  <p>{content}</p>
+                  <h3>
+                    <em>{author}</em>
+                  </h3>
+                </li>
+              </>
+            );
+          })}
+        </ul>
+      </>
+    );
+  } else {
+    return <h2>No articles found or something went wrong ...{error}</h2>;
+  }
 };
 
 export default ArticlesPage;
