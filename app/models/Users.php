@@ -18,7 +18,7 @@ class Users
      */
     private function getNextUserId(): int
     {
-        $usersFromDB = $this->getAllUsers();
+        $usersFromDB = $this->getAll(USERS_DB);
 
         if (empty($usersFromDB)) {
             return 1;
@@ -55,18 +55,18 @@ class Users
      * Get all users from the CSV file.
      * 
      * @var string||bool $userDbFile path or false if file doesn't exist
-     * @var array $usersFromDb list of users got from DB_USERS
+     * @var array $dataFromDb list of users got from DB_USERS
      * 
      * @return array List of users from USERS_DB or empty otherwise 
      */
 
-    private function getAllUsers(): array
+    protected function getAll(string $path): array
     {
-        $usersDbFile = $this->getFilePath(USERS_DB);
+        $dbSourceFile = $this->getFilePath($path);
 
-        if ($usersDbFile) {
-            $usersFromDb = [];
-            $handle = fopen($usersDbFile, 'r');
+        if ($dbSourceFile) {
+            $dataFromDb = [];
+            $handle = fopen($dbSourceFile, 'r');
 
             if ($handle) {
 
@@ -75,20 +75,19 @@ class Users
                 while (($row = fgetcsv($handle, 0, ",", "\"", "\\")) !== false) {
 
                     if (count($row) === count($keys)) {
-                        $usersFromDb[] = array_combine($keys, $row);
+                        $dataFromDb[] = array_combine($keys, $row);
                     } else {
-
                         error_log("Skipping row with mismatched elements: " . print_r($row, true));
                     }
                 }
 
                 fclose($handle);
-                return $usersFromDb;
+                return $dataFromDb;
             }
-            // cant open the file ...
+            // cant open the file ..
             return [];
         }
-        // file doesnt exist ...
+        // file doesnt exist ..
         return [];
     }
 
@@ -167,7 +166,7 @@ class Users
     {
 
         try {
-            $usersFromDB = $this->getAllUsers();
+            $usersFromDB = $this->getAll(USERS_DB);
             $proceedRegistration = $this->validateUser();
 
             if ($proceedRegistration) {
@@ -234,7 +233,7 @@ class Users
     function isUserValid(): bool
     {
 
-        $usersFromDB = $this->getAllUsers();
+        $usersFromDB = $this->getAll(USERS_DB);
 
 
 
@@ -254,7 +253,7 @@ class Users
                 if ($userFromDB['username'] === $cleanUsernameFromClient && $userFromDB['password'] === $cleanPasswordFromClient) {
 
                     $_SESSION['user'] = $cleanUsernameFromClient;
-                    // $_SESSION['isLoggedIn'] = true;
+
 
                     return true;
                 }

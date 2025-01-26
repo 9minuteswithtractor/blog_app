@@ -7,16 +7,15 @@ class Articles extends Users
 {
 
 
-    public $pathToArticles;
-
     public function __construct()
     {
-        $this->pathToArticles = $this->getFilePath(POSTS_DB);
+        // echo 'Articles model created ..';
     }
 
-    public function showPath()
+    public function fetchAllArticles()
     {
 
-        print_r($this->pathToArticles);
+        $reqData = $this->getAll(ARTICLES_DB);
+        return $reqData ? $reqData : false;
     }
 }

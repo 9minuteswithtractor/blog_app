@@ -6,7 +6,7 @@
     $url = parse_url($uri, PHP_URL_PATH);
 
     define('USERS_DB', 'users.csv');
-    define('POSTS_DB', 'articles.csv');
+    define('ARTICLES_DB', 'articles.csv');
 
     switch ($url) {
         case '/api/login':
