@@ -14,7 +14,7 @@ function App() {
     return sessionStorage.getItem("userName");
   });
   const [loginState, setLoginState] = useState(() => {
-    return sessionStorage.getItem("isisLoggedIn");
+    return sessionStorage.getItem("isLoggedIn");
   });
 
   console.log("App current user : ", userName);

@@ -3,8 +3,7 @@
 class LogoutController
 {
 
-
-    public function handleLogout()
+    public function handleLogout(): void
     {
         session_destroy();
     }
