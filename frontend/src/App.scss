@@ -16,22 +16,45 @@ body {
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr;
-}
+  // grid-template-areas: "header header" "main main" "footer footer";
 
-.App {
-  flex-grow: 1;
-  width: 85%; /* Full width of the screen */
-  height: 100%; /* Full height of the body */
-  display: flex; /* Enable flexbox for layout */
-  flex-direction: column; /* Stack children vertically */
-  margin: 0 auto;
-  // border: 5px solid red; /* Debugging border */
+  .App {
+    width: 85%; /* Full width of the screen */
+    min-width: 550px; // then navbar -> hamburger @media (screen min width)
+    height: 100%; /* Full height of the body */
+    display: flex; /* Enable flexbox for layout */
+    flex-direction: column; /* Stack children vertically */
+    margin: 0 auto;
+    // border: 5px solid red; /* Debugging border */
 
-  .main-layout {
-    height: 100%; /* Ensure .main-layout takes up full height of .App */
-    display: flex;
-    flex-direction: column; /* Stack items vertically */
-    // border: 5px solid orange; /* Debugging border */
-    overflow: hidden; /* Prevent overflow issues if children are large */
+    .main-layout {
+      height: 100%; /* Ensure .main-layout takes up full height of .App */
+      display: flex;
+      flex-direction: column; /* Stack items vertically */
+      // border: 5px solid orange; /* Debugging border */
+      overflow: hidden; /* Prevent overflow issues if children are large */
+
+      // header.nav-bar-container {
+      //   grid-area: header;
+      // }
+
+      // main {
+      //   grid-area: main;
+      // }
+
+      footer {
+        height: 80px;
+        border: 3px solid black;
+        background-color: rgba(156, 168, 168, 0.234);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 5px;
+        p {
+          // border: 1px solid green;
+          font-weight: bold;
+        }
+      }
+    }
   }
 }

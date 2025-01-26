@@ -1,6 +1,8 @@
 form.login-form {
-  height: 100%;
+  min-height: 100%;
+
   width: 30%;
+  min-width: 300px;
 
   display: flex;
   flex-direction: column;
@@ -18,7 +20,7 @@ form.login-form {
     width: fit-content;
     margin: 5px auto;
     border: 2px solid black;
-    padding: 5px;
+    padding: 10px;
 
     input {
       padding: 5px;
@@ -33,12 +35,25 @@ form.login-form {
   button {
     width: 30%;
     margin: 20px auto;
-    padding: 5px;
+    padding: 10px;
     font-size: 1.01rem;
     letter-spacing: 1px;
   }
 
   button:hover {
     cursor: pointer;
+  }
+}
+
+.login-output {
+  .login-message-container {
+    height: 50px;
+  }
+
+  .success {
+    color: green;
+  }
+  .fail {
+    color: red;
   }
 }
