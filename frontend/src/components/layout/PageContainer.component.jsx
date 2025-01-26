@@ -1,10 +1,13 @@
 import "./PageContainer.styles.scss";
 
-const PageContainer = ({ title, content }) => {
+const PageContainer = ({ greeting, content }) => {
+  const userName = sessionStorage.getItem("userName");
   return (
     <main className="page-container">
       <div className="title-container">
-        <h2>{title}</h2>
+        <h2>
+          {userName ? `${greeting},  ${userName}!` : `${greeting}, Guest!`}
+        </h2>
       </div>
       <div className="content-container">{content}</div>
     </main>

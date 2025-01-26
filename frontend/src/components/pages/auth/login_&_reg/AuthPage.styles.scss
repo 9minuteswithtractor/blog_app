@@ -44,3 +44,16 @@ form.login-form {
     cursor: pointer;
   }
 }
+
+.login-output {
+  .login-message-container {
+    height: 50px;
+  }
+
+  .success {
+    color: green;
+  }
+  .fail {
+    color: red;
+  }
+}

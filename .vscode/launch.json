@@ -16,9 +16,9 @@
             "request": "launch",
             "runtimeArgs": [
                 "-S",
-                "localhost:8000", // or as needed e.g. 8000
+                "localhost:8000", 
                 "-t",
-                "backend/public",
+                "app/public",
                 "-d",
                 "xdebug.mode=debug",
                 "-d",
@@ -27,13 +27,13 @@
                 "xdebug.client_port=9003",
             ],
             "pathMappings": {
-                "/": "${workspaceRoot}/backend/public"
+                "/": "${workspaceRoot}/app/public"
             }
         },        
     ],
     "compounds": [
         {
-            "name": "Launch Server & Debug",
+            "name": "Launch Server & Debug 🚀",
             "configurations": ["Launch php server", "Listen for Xdebug"]
         }
     ]

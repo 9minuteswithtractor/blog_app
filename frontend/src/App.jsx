@@ -4,28 +4,49 @@ import PageContainer from "./components/layout/PageContainer.component";
 import NavBar from "./components/navbar/NavBar.component";
 import HomePage from "./components/pages/home/HomePage.component";
 import ArticlesPage from "./components/pages/articles/ArticlesPage.component";
-import LoginPage from "./components/pages/auth/LoginPage.component";
+import LoginPage from "./components/pages/auth/login_&_reg/AuthPage.component";
 
 import "./App.scss";
+import { useState, useEffect } from "react";
 
 function App() {
+  const [userName, setUserName] = useState(() => {
+    return sessionStorage.getItem("userName");
+  });
+  const [loginState, setLoginState] = useState(() => {
+    return sessionStorage.getItem("isisLoggedIn");
+  });
+
+  console.log("App current user : ", userName);
+  // useEffect to watch the changes to userName and update sessionStorage accordingly
+
+  // Synchronize userName with sessionStorage when it changes
+  useEffect(() => {
+    if (userName) {
+      sessionStorage.setItem("userName", userName);
+    } else {
+      sessionStorage.removeItem("userName");
+    }
+  }, [userName]);
+
   return (
     <div className="App">
       <Router>
         <div className="main-layout">
-          <NavBar />
+          <NavBar userName={userName} setUserName={setUserName} />
           <Routes>
             <Route
               path="/"
               element={
-                <PageContainer title="Welcome!" content={<HomePage />} />
+                <PageContainer greeting="Welcome" content={<HomePage />} />
               }
             />
+
             <Route
               path="/articles"
               element={
                 <PageContainer
-                  title="Catch up with latest Posts!"
+                  greeting="Catch up with latest Posts"
                   content={<ArticlesPage />}
                 />
               }
@@ -33,10 +54,17 @@ function App() {
             <Route
               path="/login"
               element={
-                <PageContainer
-                  title="Enter Your login details"
-                  content={<LoginPage />}
-                />
+                <>
+                  <PageContainer
+                    greeting="Enter Your login details"
+                    content={
+                      <LoginPage
+                        setUserName={setUserName}
+                        setLoginState={setLoginState}
+                      />
+                    }
+                  />
+                </>
               }
             />
           </Routes>

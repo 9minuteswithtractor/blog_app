@@ -10,6 +10,10 @@
         - Simple react with php mvc pattern
         - No design - pure functionality
   
+
+"php.executablePath": "/Applications/XAMPP/xamppfiles/bin/php",
+
+
 ### - Requirements -
 # Implement :
     [ ] - navbar / loggedIn navbar
