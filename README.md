@@ -1,32 +1,19 @@
 # Simple Blog-App
-
-    Things to begin with ? :
-        - Backend || Frontend ?
-    
-    How MVC works ?
-        - I kinda understand the concept but not sure about where the logic before returning the data to client is happening ( controller or model ) ?
     
     Lets start clean project 
         - Simple react with php mvc pattern
         - No design - pure functionality
   
-
-"php.executablePath": "/Applications/XAMPP/xamppfiles/bin/php",
-
-
 ### - Requirements -
 # Implement :
-    [ ] - navbar / loggedIn navbar
-    [ ] - navbar Routing (ClientSide)
-    [ ] - login / validation / sessions
-    [ ] - registration 
-    [ ] - Show all articles for everyone
-    [ ] - Crate, Update, Delete for the logged in ones
-    [ ] - OOP MVC pattern for Backend ( for practice )
+    [ ] - user login / auth / registration
+    [ ] - get all articles
+    [ ] - create , read , delete articles / comments
+    [ ] - add photos ?
+
 
 # db :
     local .csv file
-
 
 # Debbugger
 
@@ -44,8 +31,6 @@ then install debugger:
 `pecl install xdebug`
 
 then install vs code extensions - "php debug" by xdebug and Php by DevSense
-
-
 
 php.ini file content
 ```[Xdebug]
