@@ -65,7 +65,6 @@ const LoginPage = ({ setUserName, setLoginState }) => {
 
       const result = response.data;
       const { message, isLoggedIn, error } = result;
-      const { isRegistered } = result;
 
       console.log(result);
       setMessage(message);
