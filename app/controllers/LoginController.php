@@ -9,13 +9,11 @@
 
 class LoginController
 {
-
     public function __construct()
     {
         // echo 'Login controller created!';
 
     }
-
 
     public function handleLogin(): void
     {

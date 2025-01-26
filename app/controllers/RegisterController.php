@@ -12,8 +12,8 @@ class RegisterController
 
         require_once "../models/Users.php";
         $registrationReq = new Users;
-        $userIsRegistered =  $registrationReq->registerUser();
+        $userRegistrationStatus =  $registrationReq->registerUser();
 
-        echo json_encode($userIsRegistered);
+        echo json_encode($userRegistrationStatus);
     }
 }

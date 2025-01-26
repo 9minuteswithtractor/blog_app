@@ -40,7 +40,7 @@ class Users
      *@return string absolute filePath if exist, false otherwise...
      */
 
-    private function getFilePath(string $fileName): bool|string
+    protected static function getFilePath(string $fileName): bool|string
     {
 
         chdir('../data');

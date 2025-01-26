@@ -66,17 +66,12 @@ const LoginPage = ({ setUserName, setLoginState }) => {
       const result = response.data;
       const { message, isLoggedIn, error } = result;
       const { isRegistered } = result;
-      if (isRegistered) {
-        // handleTransfer to articles ...
-        // TODO handleTransfer() => setTimeout => redirect ...
-
-        console.log("redirecting to articles ...");
-      }
 
       console.log(result);
       setMessage(message);
       setLoggedIn(isLoggedIn);
       setError(error);
+      clearAndRedirect(isLoggedIn);
     } catch (err) {
       setError(err);
     }
