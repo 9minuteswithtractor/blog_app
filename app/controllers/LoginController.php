@@ -1,4 +1,6 @@
 <?php
+require_once '../conf/init.php';
+
 
 /**
  *  LoginController class
@@ -22,6 +24,6 @@ class LoginController
         $loginReq = new Users;
         $respToClient =  $loginReq->login();
 
-        echo json_encode($respToClient); // BUG ?? 
+        echo json_encode($respToClient);
     }
 }

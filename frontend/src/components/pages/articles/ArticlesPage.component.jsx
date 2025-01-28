@@ -7,6 +7,18 @@ const ArticlesPage = () => {
   const [articles, setArticles] = useState([]);
   const [error, setError] = useState("");
 
+  // TODO check sessionStorage isLoggedIn ?
+  /**
+   * if logged in render text input area with submit btn
+   *
+   * object shape ?
+   *  axios post req -> add to articles ...
+   *
+   * after fetch again all articles
+   *
+   * handle comments
+   */
+
   // fetch all articles on init state :
   useEffect(() => {
     const fetchAllArticles = async () => {

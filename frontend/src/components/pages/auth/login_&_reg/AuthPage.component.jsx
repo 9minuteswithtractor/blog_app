@@ -17,9 +17,9 @@ const LoginPage = ({ setUserName, setLoginState }) => {
   const clearAndRedirect = (status) => {
     if (status) {
       sessionStorage.setItem("userName", user);
-      sessionStorage.setItem("isLoggedIn", loggedIn);
+      sessionStorage.setItem("isLoggedIn", status);
 
-      setUserName(user);
+      // setUserName(user);
 
       setTimeout(() => {
         setUser("");
@@ -91,8 +91,9 @@ const LoginPage = ({ setUserName, setLoginState }) => {
       const result = response.data;
       const { message, isLoggedIn, error } = result;
 
+      console.log(result);
+
       setMessage(message);
-      setLoggedIn(isLoggedIn);
       setError(error);
       clearAndRedirect(isLoggedIn);
     } catch (err) {

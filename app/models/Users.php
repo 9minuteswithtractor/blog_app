@@ -1,17 +1,8 @@
 <?php
-
-
-/**
- * session_start(): Ignoring session_start() because a session is already active ..
- */
-// session_start();
-
-// TODO write class doc
+require_once '../conf/init.php';
 
 class Users
 {
-
-
     /**
      * Summary of getNextUserId
      * @return int last id number in the user list 
@@ -42,7 +33,6 @@ class Users
 
     protected static function getFilePath(string $fileName): bool|string
     {
-
         chdir('../data');
         $pathToDb =  getcwd();
         $filePath = $pathToDb . '/' . $fileName;
@@ -274,7 +264,6 @@ class Users
 
     public function login(): array
     {
-
         $validUser = $this->isUserValid();
         if ($validUser) {
 
