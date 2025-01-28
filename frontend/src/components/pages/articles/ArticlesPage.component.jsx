@@ -6,70 +6,107 @@ import "./ArticlesPage.styles.scss";
 const ArticlesPage = () => {
   const [articles, setArticles] = useState([]);
   const [error, setError] = useState("");
+  const [post, setPost] = useState(""); // For text input
+  const [loading, setLoading] = useState(false); // Loading state for feedback
 
-  // TODO check sessionStorage isLoggedIn ?
-  /**
-   * if logged in render text input area with submit btn
-   *
-   * object shape ?
-   *  axios post req -> add to articles ...
-   *
-   * after fetch again all articles
-   *
-   * handle comments
-   */
+  // Session data
+  const user = sessionStorage.getItem("userName");
+  const loggedInStatus = sessionStorage.getItem("isLoggedIn") === "true"; //
 
-  // fetch all articles on init state :
+  const handleOnPostChange = (event) => {
+    setPost(event.target.value);
+  };
+
+  const handleOnFormSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!post.trim()) {
+      setError("Post content cannot be empty.");
+      return;
+    }
+
+    const baseApi = "http://localhost:8000/api";
+    try {
+      const newArticle = {
+        title: `Post by ${user}`,
+        content: post,
+        author: user,
+      };
+
+      await axios.post(`${baseApi}/articles/add`, newArticle, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true, // Include cookies/session if needed
+      });
+
+      setPost("");
+      fetchAllArticles();
+      setError("");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  // Fetch articles on component loaded state
   useEffect(() => {
-    const fetchAllArticles = async () => {
-      const baseApi = "http://localhost:8000/api";
-      try {
-        const response = await axios.get(`${baseApi}/articles`);
-
-        const allReqData = response.data;
-        setArticles(allReqData);
-        //
-      } catch (err) {
-        setError(err.message); // Update state with the error message
-      } finally {
-        console.log("fetching all articles from server ...");
-      }
-    };
-    fetchAllArticles(); // Call the function
+    fetchAllArticles();
   }, []);
 
-  // obj shape : id, title, content, author
-  if (articles.length > 0 && !error) {
-    return (
-      <>
+  const fetchAllArticles = async () => {
+    const baseApi = "http://localhost:8000/api";
+    try {
+      const response = await axios.get(`${baseApi}/articles`);
+      setArticles(response.data);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  return (
+    <div>
+      <h1>Articles</h1>
+
+      {loggedInStatus && (
+        <form className="post-form" onSubmit={handleOnFormSubmit}>
+          <div className="post-container">
+            <input
+              type="text"
+              value={post}
+              onChange={handleOnPostChange}
+              placeholder="Write your article..."
+            />
+            <button type="submit" disabled={loading}>
+              {loading ? "Posting..." : "Post"}
+            </button>
+          </div>
+          {error && <p className="error-message">{error}</p>}
+        </form>
+      )}
+
+      {/* Show loading or error for articles */}
+      {loading && <p>Loading articles...</p>}
+      {error && !loading && <p className="error-message">{error}</p>}
+
+      {/* Display the articles */}
+      {articles.length > 0 && !loading ? (
         <ul className="articles-container">
-          {articles.map((post) => {
-            const { id, title, content, author } = post;
+          {articles.map((article) => {
+            const { id, title, content, author } = article;
             return (
-              <>
-                <li className="article-card-container" key={id}>
-                  <h2>{title}</h2>
-                  <p>{content}</p>
-                  <h3>
-                    <em>{author}</em>
-                  </h3>
-                </li>
-                <li className="article-card-container" key={id}>
-                  <h2>{title}</h2>
-                  <p>{content}</p>
-                  <h3>
-                    <em>{author}</em>
-                  </h3>
-                </li>
-              </>
+              <li className="article-card-container" key={id}>
+                <h2>{title}</h2>
+                <p>{content}</p>
+                <h3>
+                  <em>{author}</em>
+                </h3>
+              </li>
             );
           })}
         </ul>
-      </>
-    );
-  } else {
-    return <h2>No articles found or something went wrong ...{error}</h2>;
-  }
+      ) : (
+        !loading && <h2>No articles found or something went wrong...</h2>
+      )}
+    </div>
+  );
 };
 
 export default ArticlesPage;
